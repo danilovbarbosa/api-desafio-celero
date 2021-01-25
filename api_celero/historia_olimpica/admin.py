@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from historia_olimpica.models import AthleteEvents
+
+
+@admin.register(AthleteEvents)
+class AthleteEventsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'games', 'year', 'sport', 'medal']
