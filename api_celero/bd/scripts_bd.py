@@ -66,16 +66,48 @@ class NocRegions(Connection):
         except Exception as e:
             print(f'Erro ao inserir: {e}')
 
-if __name__ == '__main__':
-    df_noc_regions = carregar_csv('noc_regions.csv')
+class AthleteEvents(Connection):
+    def __init__(self):
+        Connection.__init__(self)
+
+
+    def insert(self, *args):
+        try:
+            sql = '''
+            INSERT INTO 
+            historia_olimpica_athleteevents (noc, region, notes) 
+            VALUES (%s, %s, %s) 
+            RETURNING id;
+            '''
+            self.execute(sql, args)
+            self.commit()
+        except Exception as e:
+            print(f'Erro ao inserir: {e}')
+
+def inserir_dados_na_tabela_noc_regions(df):
     noc_regions = NocRegions()
 
-    for i in df_noc_regions[:][2:].itertuples():
+    for i in df[:][1:].itertuples():
         noc = i[1]
         region = i[2]
         notes = i[3]
 
         noc_regions.insert(noc, region, notes)
+
+
+def inserir_dados_na_tabela_athlete_events(df):
+    athlete_events = AthleteEvents()
+
+    for i in df[:][1:].itertuples():
+        noc = i[1]
+        region = i[2]
+        notes = i[3]
+
+        athlete_events.insert(noc, region, notes)
+
+if __name__ == '__main__':
+    df_noc_regions = carregar_csv('noc_regions.csv')
+    inserir_dados_na_tabela_noc_regions(df_noc_regions)
 
     df_athlete_events = carregar_csv('athlete_events.csv')
 
