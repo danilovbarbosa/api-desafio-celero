@@ -1,1 +1,1 @@
-web: gunicorn api_celero.api_celero.wsgi --log-file -
+web: gunicorn api_celero.wsgi --log-file -
