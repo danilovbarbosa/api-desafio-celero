@@ -96,10 +96,10 @@ class AthleteEvents(Connection):
 def inserir_dados_na_tabela_noc_regions(df):
     noc_regions = NocRegions()
 
-    for i in df[:][1:].itertuples():
-        noc = i[1]
-        region = i[2]
-        notes = i[3]
+    for i in df[:][1:]:
+        noc = i[0]
+        region = i[1]
+        notes = i[2]
 
         noc_regions.insert(noc, region, notes)
 
@@ -113,33 +113,35 @@ def selecionar_id_na_tabela_noc_regions(noc: str):
 def inserir_dados_na_tabela_athlete_events(df):
     athlete_events = AthleteEvents()
 
-    for index, i in enumerate(df[:][154:].itertuples()):
-        name = i[2]
-        sex = i[3]
-        age = i[4]
-        height = i[5]
-        weight = i[6]
-        team = i[7]
-        noc = selecionar_id_na_tabela_noc_regions(i[8])
-        games = i[9]
-        year = i[10]
-        season = i[11]
-        city = i[12]
-        sport = i[13]
-        event = i[14]
-        medal = i[15]
+    for index, i in enumerate(df[:100][1:]):
+        name = i[1]
+        sex = i[2]
+        age = i[3]
+        height = i[4]
+        weight = i[5]
+        team = i[6]
+        noc = selecionar_id_na_tabela_noc_regions(i[7])
+        games = i[8]
+        year = i[9]
+        season = i[10]
+        city = i[11]
+        sport = i[12]
+        event = i[13]
+        medal = i[14]
 
         try:
-            athlete_events.insert(name, sex, age, height, weight, team, noc, games, year, season,
+            print(name, sex, age, height, weight, team, noc, games, year, season,
             city, sport, event, medal)
+            # athlete_events.insert(name, sex, age, height, weight, team, noc, games, year, season,
+            # city, sport, event, medal)
         except Exception as e:
             print(f'Erro ao inserir item {index}, veja: {e}')
 
-
-if __name__ == '__main__':
-    df_noc_regions = carregar_csv('noc_regions.csv')
-    inserir_dados_na_tabela_noc_regions(df_noc_regions)
-
-    df_athlete_events = carregar_csv('athlete_events.csv')
-    inserir_dados_na_tabela_athlete_events(df_athlete_events)
+#
+# if __name__ == '__main__':
+#     # df_noc_regions = carregar_csv('noc_regions.csv')
+#     # inserir_dados_na_tabela_noc_regions(df_noc_regions)
+#
+#     df_athlete_events = carregar_csv('athlete_events.csv')
+#     inserir_dados_na_tabela_athlete_events(df_athlete_events)
 
