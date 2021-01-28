@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.filters import SearchFilter
 
 from historia_olimpica.models import AthleteEvents, NocRegions
 from historia_olimpica.serializers import AthleteEventsSerializer, NocRegionsSerializer
